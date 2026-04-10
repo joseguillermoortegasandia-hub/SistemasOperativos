@@ -44,3 +44,18 @@ function solveFIFO(data) {
     });
     return generarReporte("FIFO", lista);
 }
+
+function solveLIFO(data) {
+    let lista = data.map(p => ({...p})).sort((a, b) => a.ti - b.ti);
+    let term = [], pila = [], reloj = lista[0].ti;
+    while (lista.length > 0 || pila.length > 0) {
+        while (lista.length > 0 && lista[0].ti <= reloj) pila.push(lista.shift());
+        if (pila.length === 0) { reloj = lista[0].ti; continue; }
+        let p = pila.pop();
+        p.tf = reloj + p.t;
+        reloj = p.tf;
+        calcularMetricas(p);
+        term.push(p);
+    }
+    return generarReporte("LIFO", term);
+}
