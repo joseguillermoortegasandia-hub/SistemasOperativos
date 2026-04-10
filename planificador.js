@@ -59,3 +59,35 @@ function solveLIFO(data) {
     }
     return generarReporte("LIFO", term);
 }
+
+function solveRR(data, q) {
+    let lista = data.map(p => ({...p})).sort((a, b) => a.ti - b.ti);
+    let cola = [], term = [], n = lista.length, reloj = lista[0].ti;
+    
+    cola.push(lista.shift());
+
+    while (term.length < n) {
+        if (cola.length === 0 && lista.length > 0) {
+            reloj = Math.max(reloj, lista[0].ti);
+            cola.push(lista.shift());
+        }
+
+        let p = cola.shift();
+        let chunk = Math.min(p.t_restante, q);
+        p.t_restante -= chunk;
+        reloj += chunk;
+
+        while (lista.length > 0 && lista[0].ti <= reloj) {
+            cola.push(lista.shift());
+        }
+
+        if (p.t_restante > 0) {
+            cola.push(p);
+        } else {
+            p.tf = reloj;
+            calcularMetricas(p);
+            term.push(p);
+        }
+    }
+    return generarReporte("RoundRobin", term);
+}
