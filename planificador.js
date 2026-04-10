@@ -32,3 +32,15 @@ function generarReporte(nombre, procesos) {
     fs.writeFileSync(`resultado_${nombre}.txt`, contenido);
     return sE / n;
 }
+
+function solveFIFO(data) {
+    let lista = data.map(p => ({...p})).sort((a, b) => a.ti - b.ti);
+    let reloj = 0;
+    lista.forEach(p => {
+        if (reloj < p.ti) reloj = p.ti;
+        p.tf = reloj + p.t;
+        reloj = p.tf;
+        calcularMetricas(p);
+    });
+    return generarReporte("FIFO", lista);
+}
