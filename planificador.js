@@ -91,3 +91,26 @@ function solveRR(data, q) {
     }
     return generarReporte("RoundRobin", term);
 }
+
+// EJECUCIÓN FINAL
+console.log("--- PROCESANDO ALGORITMOS (Q=4) ---");
+try {
+    const raw = fs.readFileSync('datos.txt', 'utf8');
+    const procesos = raw.trim().split('\n').map(l => {
+        const parts = l.trim().split(/\s+/);
+        return new Proceso(parts[0], parts[1], parts[2]);
+    });
+
+    const eF = solveFIFO(procesos);
+    const eL = solveLIFO(procesos);
+    const eR = solveRR(procesos, 4);
+
+    console.log(`\n¡Cálculos completados con Q=4!`);
+    console.log(`---------------------------------`);
+    console.log(`Espera Promedio FIFO: ${eF.toFixed(2)}`);
+    console.log(`Espera Promedio LIFO: ${eL.toFixed(2)}`);
+    console.log(`Espera Promedio RR (Q=4): ${eR.toFixed(2)}`);
+    console.log(`---------------------------------`);
+} catch (e) {
+    console.log("Error: Asegúrate de que 'datos.txt' esté presente.");
+}
