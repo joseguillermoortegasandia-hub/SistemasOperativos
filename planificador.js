@@ -96,7 +96,9 @@ function solveRR(data, q) {
 console.log("--- PROCESANDO ALGORITMOS (Q=4) ---");
 try {
     const raw = fs.readFileSync('datos.txt', 'utf8');
-    const procesos = raw.trim().split('\n').map(l => {
+    const procesos = raw.trim().split('\n')
+    .filter(linea => linea.trim() !== "") 
+    .map(l => {
         const parts = l.trim().split(/\s+/);
         return new Proceso(parts[0], parts[1], parts[2]);
     });
