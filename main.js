@@ -134,7 +134,7 @@ try {
         return { id: generarID(i), ti: parseFloat(ti), t: parseFloat(t) };
     });
 
-    let reporteFinal = "SISTEMA DE PLANIFICACIÓN DE PROCESOS\n";
+    let reporteFinal = "SISTEMA DE PLANIFICACION DE PROCESOS\n";
     reporteFinal += "====================================\n";
     reporteFinal += solveFIFO(procesosCargados);
     reporteFinal += solveLIFO(procesosCargados);
